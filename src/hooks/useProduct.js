@@ -4,10 +4,13 @@ export const useProduct = () => {
   const [listProducts, setListProducts] = useState([]);
   const [isLoading, setLoading] = useState(false);
 
-  const fetchProducts = React.useCallback(async type => {
+  const fetchProducts = React.useCallback(async (type, searchTerm) => {
     try {
       setLoading(true);
-      const resp = await fetch(`/api/product?type=${type || 1}`);
+      // change api to search with category and search term
+      const resp = await fetch(
+        `/api/product?type=${type || 0}&s=${searchTerm || ''}`,
+      );
       const data = await resp.json();
       setListProducts(data || []);
     } catch (error) {
@@ -16,5 +19,9 @@ export const useProduct = () => {
     }
   }, []);
 
-  return [listProducts, isLoading, fetchProducts];
+  const resetList = () => {
+    setListProducts([]);
+  };
+
+  return [listProducts, isLoading, fetchProducts, resetList];
 };

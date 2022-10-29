@@ -8,11 +8,6 @@ import {
   View,
 } from 'react-native';
 import React from 'react';
-import {CATEGORIES} from './ListCategory';
-
-const getCategory = id => {
-  return CATEGORIES.find(item => item.id == id).name;
-};
 
 const ProductItem = props => {
   const window = useWindowDimensions();
@@ -37,7 +32,7 @@ const ProductItem = props => {
         resizeMode="contain"
       />
       <Text style={styles.name}>{props.name}</Text>
-      <Text style={styles.type}>{getCategory(props.type)}</Text>
+      <Text style={styles.type}>{props.categoryName}</Text>
       <View style={styles.bottom}>
         <Text style={styles.priceView}>
           <Text style={styles.price}>{props.pricePerKg}</Text>
