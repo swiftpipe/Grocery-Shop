@@ -1,54 +1,8 @@
-import {
-  FlatList,
-  Image,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  useWindowDimensions,
-  View,
-} from 'react-native';
+import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import React from 'react';
-
-const ProductItem = props => {
-  const window = useWindowDimensions();
-  const ITEM_SIZE = (window.width - 2 * 14 - 14 - 8) / 2;
-  const PADDING_INNER = 10;
-  return (
-    <View
-      style={[
-        {
-          width: ITEM_SIZE,
-          marginRight: props.index % 2 === 0 ? 14 : 0,
-          padding: PADDING_INNER,
-        },
-        styles.container,
-      ]}>
-      <Image
-        source={props.img}
-        style={{
-          width: ITEM_SIZE - 2 * PADDING_INNER,
-          height: (ITEM_SIZE - 2 * PADDING_INNER) * (107 / 144),
-        }}
-        resizeMode="contain"
-      />
-      <Text style={styles.name}>{props.name}</Text>
-      <Text style={styles.type}>{props.categoryName}</Text>
-      <View style={styles.bottom}>
-        <Text style={styles.priceView}>
-          <Text style={styles.price}>{props.pricePerKg}</Text>
-          <Text> /Kg </Text>
-        </Text>
-        <TouchableOpacity>
-          <Image source={require('../assets/ic-add.png')} />
-        </TouchableOpacity>
-      </View>
-    </View>
-  );
-};
+import GridProducts from './GridProducts';
 
 const ListProductSearch = ({products = [], onCancelSearch}) => {
-  const renderItem = ({item, index}) => <ProductItem index={index} {...item} />;
-
   return (
     <View>
       <View style={styles.resultContainer}>
@@ -57,15 +11,7 @@ const ListProductSearch = ({products = [], onCancelSearch}) => {
           <Text style={styles.foundText}>Cancel</Text>
         </TouchableOpacity>
       </View>
-      <FlatList
-        scrollEnabled={false}
-        numColumns={2}
-        key={2}
-        data={products}
-        renderItem={renderItem}
-        ItemSeparatorComponent={() => <View style={{marginTop: 14}} />}
-        contentContainerStyle={{paddingVertical: 20}}
-      />
+      <GridProducts products={products} />
     </View>
   );
 };
